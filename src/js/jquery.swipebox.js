@@ -36,6 +36,7 @@
 					<div id="swipebox-caption"></div>\
 					<div id="swipebox-action">\
 						<a id="swipebox-close"></a>\
+						<a id="downloadit">Download</a>\
 						<a id="swipebox-prev"></a>\
 						<a id="swipebox-next"></a>\
 					</div>\
@@ -405,6 +406,7 @@
 			 */
 			showBars : function () {
 				var bars = $( '#swipebox-caption, #swipebox-action' );
+
 				if ( this.doCssTrans() ) {
 					bars.addClass( 'visible-bars' );
 				} else {
@@ -493,7 +495,7 @@
 			actions : function () {
 				var $this = this,
 					action = 'touchend click'; // Just detect for both event types to allow for multi-input
-				
+
 				if ( elements.length < 2 ) {
 					
 					$( '#swipebox-prev, #swipebox-next' ).hide();
@@ -513,7 +515,10 @@
 						$this.setTimeout();
 					} );
 				}
-
+				$('#downloadit').bind( action, function(){
+					$this.downloadit();
+				});	
+					
 				$( '#swipebox-close' ).bind( action, function() {
 					$this.closeSlide();
 				} );
@@ -535,6 +540,7 @@
 				
 				$( '#swipebox-slider .slide' ).removeClass( 'current' );
 				$( '#swipebox-slider .slide' ).eq( index ).addClass( 'current' );
+
 				this.setTitle( index );
 
 				if ( isFirst ) {
@@ -586,6 +592,8 @@
 			 * Open
 			 */
 			openMedia : function ( index ) {
+				
+
 				var $this = this,
 					src = null;
 
@@ -664,6 +672,7 @@
 			 * Load image
 			 */
 			loadMedia : function ( src, callback ) {
+			
 				if ( ! this.isVideo( src ) ) {
 					var img = $( '<img>' ).on( 'load', function() {
 						callback.call( img );
@@ -721,6 +730,11 @@
 				this.destroy();
 			},
 
+			downloadit : function(){
+				var download = $('.current img').attr('src');
+				window.open(download);
+			},
+
 			/**
 			 * Destroy the whole thing
 			 */
@@ -758,8 +772,11 @@
 			var swipebox = new $.swipebox( this, options );
 			this.data( '_swipebox', swipebox );
 		}
+		
 		return this.data( '_swipebox' );
 	
 	};
+
+
 
 }( window, document, jQuery ) );
