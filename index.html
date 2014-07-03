@@ -250,7 +250,9 @@ $( '#gallery' ).click( function( e ) {
 		;( function( $ ) {
 
 			/* Basic Gallery */
-			$( '.swipebox' ).swipebox();
+			$( '.swipebox' ).swipebox({
+				hideBarsOnMobile : false
+			});
 			
 			/* Video */
 			$( '.swipebox-video' ).swipebox();
